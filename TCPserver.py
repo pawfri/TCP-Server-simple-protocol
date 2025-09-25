@@ -7,7 +7,7 @@ def service(connectionSocket):
     connectionSocket.send(welcomeMessage.encode())
 
     while True:
-        message = connectionSocket.recv(1024).decode().strip()
+        message = connectionSocket.recv(1024).decode().lower().strip()
         if not message:
             break
 
