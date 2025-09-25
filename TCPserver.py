@@ -27,10 +27,17 @@ def service(connectionSocket):
 
             connectionSocket.send(str(result).encode())
 
-        # if message == 'subtract':
-            # TODO: add subtract logic
-            
+        if message == 'subtract':
+            instructionsMessage = "Send two numbers as: <x> <y> Example: 5 1"
+            connectionSocket.send(instructionsMessage.encode())
 
+            calculatorParts = connectionSocket.recv(1024).decode().strip().split()
+            x = int(calculatorParts[0])
+            y = int(calculatorParts[1])
+            result = x - y
+
+            connectionSocket.send(str(result).encode())
+            
         # if message == 'random':
             # TODO: add random logic
             
