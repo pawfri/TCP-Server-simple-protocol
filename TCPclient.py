@@ -2,7 +2,7 @@ from socket import *
 
 # CLIENT
 clientSocket = socket(AF_INET, SOCK_STREAM)
-clientSocket.connect(('localhost', 21))
+clientSocket.connect(('localhost', 1337))
 
 welcome = clientSocket.recv(1024).decode()
 print(f'{welcome}')

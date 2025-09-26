@@ -53,7 +53,7 @@ def service(connectionSocket):
 
 
 # Concurrent Server
-serverport = 21
+serverport = 1337
 serverSocket = socket(AF_INET, SOCK_STREAM)
 serverSocket.bind(('', serverport))
 serverSocket.listen(1)
