@@ -5,7 +5,7 @@ import json
 
 # Service
 def service(connectionSocket):
-    welcomeMessage = 'To start insert JSON of format: {"method": "command", "numberX": X, "numberY": Y}. Type exit to disconnect.'
+    welcomeMessage = 'Insert JSON of format: {"method": "command", "number1": x, "number2": y}. Type exit to disconnect.'
     connectionSocket.send(welcomeMessage.encode())
 
     while True:
@@ -16,18 +16,30 @@ def service(connectionSocket):
             connectionSocket.close()
             break
 
-        
-        # if message == 'add':
-            # TODO: Implement logic
+        # Parse the JSON-formatted message and extract the command and numeric values
+        data = json.loads(message)
+        command = data.get("method", "").lower()
+        number1 = data.get("number1")
+        number2 = data.get("number2")
 
-        # elif message == 'subtract':
-            # TODO: Implement logic
+        
+        if command == 'add':
+            result = number1 + number2
+
+            connectionSocket.send(str(result).encode())
+
+        elif command == 'subtract':
+            result = number1 - number2
+
+            connectionSocket.send(str(result).encode())
             
-        # elif message == 'random':
-            # TODO: Implement logic
+        elif command == 'random':
+            result = random.randint(number1, number2)
+
+            connectionSocket.send(str(result).encode())
 
         else:
-            connectionSocket.send("Unknown command. Try: add, subtract or random. Type exit to disconnect".encode())  
+            connectionSocket.send('Error. Must be JSON format: {"method": "command", "number1": X, "number2": Y}'.encode())
 
 
 # Concurrent Server
