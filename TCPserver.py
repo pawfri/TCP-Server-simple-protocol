@@ -48,8 +48,8 @@ def service(connectionSocket):
             y = int(calculatorParts[1])
             result = random.randint(x, y)
 
-            connectionSocket.send(str(result).encode())
-            
+            connectionSocket.send(str(result).encode())      
+
 
 # Concurrent Server
 serverport = 21
