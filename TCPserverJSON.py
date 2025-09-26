@@ -16,30 +16,33 @@ def service(connectionSocket):
             connectionSocket.close()
             break
 
-        # Parse the JSON-formatted message and extract the command and numeric values
-        data = json.loads(message)
-        command = data.get("method", "").lower()
-        number1 = data.get("number1")
-        number2 = data.get("number2")
-
-        
-        if command == 'add':
-            result = number1 + number2
-
-            connectionSocket.send(str(result).encode())
-
-        elif command == 'subtract':
-            result = number1 - number2
-
-            connectionSocket.send(str(result).encode())
+        try:
+            # Parse the JSON-formatted message and extract the command and numeric values
+            data = json.loads(message)
+            command = data.get("method", "").lower()
+            number1 = data.get("number1")
+            number2 = data.get("number2")
             
-        elif command == 'random':
-            result = random.randint(number1, number2)
+            if command == 'add':
+                result = number1 + number2
 
-            connectionSocket.send(str(result).encode())
+                connectionSocket.send(str(result).encode())
 
-        else:
-            connectionSocket.send('Error. Must be JSON format: {"method": "command", "number1": X, "number2": Y}'.encode())
+            elif command == 'subtract':
+                result = number1 - number2
+
+                connectionSocket.send(str(result).encode())
+                
+            elif command == 'random':
+                result = random.randint(number1, number2)
+
+                connectionSocket.send(str(result).encode())
+
+            else:
+                connectionSocket.send('Error: Unkown command. Use add, subtract or random'.encode())
+            
+        except json.JSONDecodeError:
+            connectionSocket.send('Error: Must be JSON format: {"method": "command", "number1": X, "number2": Y}'.encode())
 
 
 # Concurrent Server
