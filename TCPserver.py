@@ -9,15 +9,13 @@ def service(connectionSocket):
 
     while True:
         message = connectionSocket.recv(1024).decode().lower().strip()
-        if not message:
-            break
 
         if message == 'exit':
             connectionSocket.send("You have disconnected".encode())
             connectionSocket.close()
             break
 
-        if message == 'add':
+        elif message == 'add':
             instructionsMessage = "Input numbers. Example: 2 4"
             connectionSocket.send(instructionsMessage.encode())
 
@@ -28,7 +26,7 @@ def service(connectionSocket):
 
             connectionSocket.send(str(result).encode())
 
-        if message == 'subtract':
+        elif message == 'subtract':
             instructionsMessage = "Input numbers. Example: 1 10"
             connectionSocket.send(instructionsMessage.encode())
 
@@ -39,7 +37,7 @@ def service(connectionSocket):
 
             connectionSocket.send(str(result).encode())
             
-        if message == 'random':
+        elif message == 'random':
             instructionsMessage = "Input numbers. Example: 2 5"
             connectionSocket.send(instructionsMessage.encode())
 
@@ -48,7 +46,10 @@ def service(connectionSocket):
             y = int(calculatorParts[1])
             result = random.randint(x, y)
 
-            connectionSocket.send(str(result).encode())      
+            connectionSocket.send(str(result).encode())
+
+        else:
+            connectionSocket.send("Unknown command. Try: add, subtract or random. Type exit to disconnect".encode())  
 
 
 # Concurrent Server
