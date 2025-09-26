@@ -4,17 +4,20 @@ import random
 
 # Service
 def service(connectionSocket):
+    # Welcome message explaining server functionality to the client when connecting
     welcomeMessage = "To start type: add, subtract or random. To disconnect type: exit."
     connectionSocket.send(welcomeMessage.encode())
 
     while True:
         message = connectionSocket.recv(1024).decode().lower().strip()
 
+        # Handling client request to disconnect from the server
         if message == 'exit':
             connectionSocket.send("You have disconnected".encode())
             connectionSocket.close()
             break
-
+        
+        # Handling addition of two numbers
         elif message == 'add':
             instructionsMessage = "Input numbers. Example: 2 4"
             connectionSocket.send(instructionsMessage.encode())
@@ -26,6 +29,7 @@ def service(connectionSocket):
 
             connectionSocket.send(str(result).encode())
 
+        # Handling subtraction of two numbers
         elif message == 'subtract':
             instructionsMessage = "Input numbers. Example: 1 10"
             connectionSocket.send(instructionsMessage.encode())
@@ -36,7 +40,8 @@ def service(connectionSocket):
             result = x - y
 
             connectionSocket.send(str(result).encode())
-            
+
+        # Handling a random number between two numbers, both included         
         elif message == 'random':
             instructionsMessage = "Input numbers. Example: 2 5"
             connectionSocket.send(instructionsMessage.encode())
@@ -48,6 +53,7 @@ def service(connectionSocket):
 
             connectionSocket.send(str(result).encode())
 
+        # Handling of unknown commands
         else:
             connectionSocket.send("Unknown command. Try: add, subtract or random. Type exit to disconnect".encode())  
 
