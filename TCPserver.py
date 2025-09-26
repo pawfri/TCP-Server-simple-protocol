@@ -1,5 +1,6 @@
 from socket import *
 import threading
+import random
 
 # Service
 def service(connectionSocket):
@@ -38,8 +39,16 @@ def service(connectionSocket):
 
             connectionSocket.send(str(result).encode())
             
-        # if message == 'random':
-            # TODO: add random logic
+        if message == 'random':
+            instructionsMessage = "Send two numbers as: <x> <y> Example: 1 10"
+            connectionSocket.send(instructionsMessage.encode())
+
+            calculatorParts = connectionSocket.recv(1024).decode().strip().split()
+            x = int(calculatorParts[0])
+            y = int(calculatorParts[1])
+            result = random.randint(x, y)
+
+            connectionSocket.send(str(result).encode())
             
 
 # Concurrent Server
