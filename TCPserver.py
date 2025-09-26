@@ -18,7 +18,7 @@ def service(connectionSocket):
             break
 
         if message == 'add':
-            instructionsMessage = "Send two numbers as: <x> <y> Example: 2 4"
+            instructionsMessage = "Input numbers. Example: 2 4"
             connectionSocket.send(instructionsMessage.encode())
 
             calculatorParts = connectionSocket.recv(1024).decode().strip().split()
@@ -29,7 +29,7 @@ def service(connectionSocket):
             connectionSocket.send(str(result).encode())
 
         if message == 'subtract':
-            instructionsMessage = "Send two numbers as: <x> <y> Example: 5 1"
+            instructionsMessage = "Input numbers. Example: 1 10"
             connectionSocket.send(instructionsMessage.encode())
 
             calculatorParts = connectionSocket.recv(1024).decode().strip().split()
@@ -40,7 +40,7 @@ def service(connectionSocket):
             connectionSocket.send(str(result).encode())
             
         if message == 'random':
-            instructionsMessage = "Send two numbers as: <x> <y> Example: 1 10"
+            instructionsMessage = "Input numbers. Example: 2 5"
             connectionSocket.send(instructionsMessage.encode())
 
             calculatorParts = connectionSocket.recv(1024).decode().strip().split()
